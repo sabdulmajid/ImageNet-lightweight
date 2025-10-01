@@ -1,0 +1,26 @@
+# MobileViT-XS configuration for ImageNet-100
+# Optimized for RTX 3060 (12GB VRAM)
+
+model_name: mobilevit_xs
+num_classes: 100
+pretrained: true
+input_size: 224
+
+data_path: data/imagenet100
+output_dir: experiments/mobilevit_xs
+
+batch_size: 128
+num_workers: 4
+gradient_accumulation_steps: 1
+
+epochs: 90
+learning_rate: 0.001
+weight_decay: 0.00001
+min_lr: 0.000001
+grad_clip: 1.0
+
+use_amp: true
+label_smoothing: 0.1
+auto_augment: true
+
+seed: 42
