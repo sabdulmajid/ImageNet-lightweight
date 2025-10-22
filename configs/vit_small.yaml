@@ -1,0 +1,43 @@
+# Vision Transformer Small - Case Study Configuration
+# Optimized for RTX 3060 (12GB)
+
+model:
+  name: vit_small_patch16_224
+  num_classes: 100
+  pretrained: false
+
+data:
+  train_path: data/imagenet100/train
+  val_path: data/imagenet100/val
+  batch_size: 64  # ViT needs smaller batch due to attention memory
+  num_workers: 4
+  img_size: 224
+
+training:
+  epochs: 90
+  warmup_epochs: 5
+  base_lr: 0.001
+  weight_decay: 0.05
+  label_smoothing: 0.1
+  gradient_accumulation_steps: 2  # Effective batch=128
+  
+optimizer:
+  type: adamw
+  betas: [0.9, 0.999]
+
+scheduler:
+  type: cosine
+  min_lr: 1.0e-5
+
+augmentation:
+  auto_augment: rand-m9-mstd0.5-inc1
+  random_erase_prob: 0.25
+  mixup_alpha: 0.2
+  cutmix_alpha: 1.0
+
+amp:
+  enabled: true
+  
+checkpoint:
+  save_best: true
+  save_last: true
